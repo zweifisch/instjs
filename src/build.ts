@@ -20,9 +20,10 @@ export async function build(opts: {root: string, dist: string, global: string}) 
   const files = (await readDir(root)).filter(x => x.endsWith('index.tsx'))
 
   for (const file of files) {
-    ensureDir(file)
+    const dest = pth.dirname(pth.join(dist, pth.relative(root, file)))
+    ensureDir(dest)
     await fs.writeFile(
-      pth.join(pth.dirname(file), 'index.html'),
+      pth.join(dest, 'index.html'),
       html('index.js', {globalName}),
       'utf8'
     )
