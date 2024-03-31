@@ -15,6 +15,7 @@ export async function build(opts: {root: string, dist: string, global: string}) 
 
   const ctx = await getContext({root, dist, globalName})
   await ctx.rebuild()
+  ctx.dispose()
 
   const files = (await readDir(root)).filter(x => x.endsWith('index.tsx'))
 
